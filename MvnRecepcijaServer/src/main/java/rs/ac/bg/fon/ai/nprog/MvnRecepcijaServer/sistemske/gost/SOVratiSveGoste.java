@@ -12,22 +12,38 @@ import java.util.List;
 import rs.ac.bg.fon.ai.nprog.MvnRecepcijaServer.sistemske.OpstaSistemskaOperacija;
 
 /**
- *
- * @author Win10
+ * Klasa koja predstavlja sistemsku operaciju za pregled svih gostiju koji su zabelezeni u bazi. Nasledjuje apstraktnu klasu OpstaSistemskaOperacija
+ * 
+ * @author Jelena Sreckovic
  */
 public class SOVratiSveGoste extends OpstaSistemskaOperacija{
+	
+	/**
+	 * Lista gostiju
+	 */
     List<Gost> gosti = new ArrayList<>();
 
+    /**
+     * Parametrizovani konstruktor. Inicijalizuje sistemsku operaciju i listu gostiju.
+     */
     public SOVratiSveGoste() {
         
     }
 
+    /**
+     * Metoda vraca listu gostiju
+     * 
+     * @return gosti kao List<Gost>
+     */
     public List<Gost> getGosti() {
         return gosti;
     }
     
-    
-
+    /**
+     * Metoda izvrsava sistemsku operaciju pregleda gostiju. Pristupa bazi i nalazi podatke o gostima
+     * 
+     * @throws Exception ako se operacija ne izvrsi uspesno
+     */
     @Override
     protected void operacija() throws Exception {
         List<OpstiDomenskiObjekat> odo = Konekcija.getInstance().getSveOpsteDomenskeObjekte(new Gost());

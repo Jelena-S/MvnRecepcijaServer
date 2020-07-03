@@ -13,20 +13,39 @@ import java.sql.PreparedStatement;
 import rs.ac.bg.fon.ai.nprog.MvnRecepcijaServer.sistemske.OpstaSistemskaOperacija;
 
 /**
- *
- * @author Win10
+ * Klasa koja predstavlja sistemsku operaciju za kreiranje zakupa sobe. Nasledjuje apstraktnu klasu OpstaSistemskaOperacija
+ * 
+ * @author Jelena Sreckovic
  */
 public class SOKreirajZakup extends OpstaSistemskaOperacija{
+	/**
+	 * Informacije o zakupu kog treba kreirati odnosno sacuvati
+	 */
     ZakupSobe zakup;
 
+    /**
+     * Parametrizovani konstruktor. Inicijalizuje operaciju i postavlja zakup kog treba sacuvati
+     * 
+     * @param zakup zakup sobe koji se postavlja
+     */
     public SOKreirajZakup(ZakupSobe zakup) {
         this.zakup = zakup;
     }
 
+    /**
+     * Metoda vraca zakup
+     * 
+     * @return zakup kao ZakupSobe
+     */
     public ZakupSobe getZakup() {
         return zakup;
     }
 
+    /**
+     * Metoda izvrsava sistemsku operaciju kreiranja zakupa sobe. Pristupa bazi i cuva prosledjene podatke o zakupu. Pri cuvanju generise primarni kljuc zakupa
+     * 
+     * @throws Exception ako se operacija ne izvrsi uspesno
+     */
     @Override
     protected void operacija() throws Exception {
         Connection connection = Konekcija.getInstance().getConnection();
@@ -44,7 +63,7 @@ public class SOKreirajZakup extends OpstaSistemskaOperacija{
         preparedStatement.setBoolean(8, zakup.isStatus());
         preparedStatement.executeUpdate();
          // else { kljuc nije generisan  }
-        //connection.commit(); // TODO: commit uraditi u servis metodi
+        //connection.commit(); 
         preparedStatement.close();
     }
     

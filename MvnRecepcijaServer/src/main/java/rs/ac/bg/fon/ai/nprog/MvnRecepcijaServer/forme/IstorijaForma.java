@@ -17,7 +17,7 @@ import rs.ac.bg.fon.ai.nprog.MvnRecepcijaServer.istorija.Istorija;
 
 /**
  *
- * @author Win10
+ * @author Jelena Sreckovic
  */
 public class IstorijaForma extends javax.swing.JDialog {
 

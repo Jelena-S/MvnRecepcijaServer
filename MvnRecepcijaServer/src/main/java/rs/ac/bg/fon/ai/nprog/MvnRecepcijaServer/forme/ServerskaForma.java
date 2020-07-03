@@ -16,7 +16,7 @@ import rs.ac.bg.fon.ai.nprog.MvnRecepcijaServer.niti.PokretanjeServera;
 
 /**
  *
- * @author Win10
+ * @author Jelena Sreckovic
  */
 public class ServerskaForma extends javax.swing.JFrame {
 

@@ -34,7 +34,7 @@ import rs.ac.bg.fon.ai.nprog.MvnRecepcijaBiblioteka.transfer.Zahtev;
 
 /**
  *
- * @author Win10
+ * @author Jelena Sreckovic
  */
 public class ObradaKlijentskihZahteva extends Thread{
     Socket soket;

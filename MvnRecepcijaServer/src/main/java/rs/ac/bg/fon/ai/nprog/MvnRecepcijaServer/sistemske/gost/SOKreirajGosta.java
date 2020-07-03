@@ -13,21 +13,41 @@ import java.sql.ResultSet;
 import rs.ac.bg.fon.ai.nprog.MvnRecepcijaServer.sistemske.OpstaSistemskaOperacija;
 
 /**
+ * Klasa koja predstavlja sistemsku operaciju za kreiranje gosta. Nasledjuje apstraktnu klasu OpstaSistemskaOperacija
  *
- * @author Win10
+ * @author Jelena Sreckovic
  */
 public class SOKreirajGosta extends OpstaSistemskaOperacija{
+	
+	/**
+	 * Informacije o gostu kog treba kreirati odnosno sacuvati
+	 */
     Gost gost;
 
+    /**
+     * Parametrizovani konstruktor. Inicijalizuje operaciju i postavlja gosta kog treba sacuvati
+     * 
+     * @param gost gost koji se postavlja
+     * 
+     */
     public SOKreirajGosta(Gost gost) {
         this.gost = gost;
     }
 
+    /**
+     * Metoda vraca gosta
+     * 
+     * @return gost kao Gost
+     */
     public Gost getGost() {
         return gost;
     }
     
-    
+    /**
+     * Metoda izvrsava sistemsku operaciju kreiranja gosta. Pristupa bazi i cuva prosledjene podatke o gostu. Pri cuvanju generise primarni kljuc gosta
+     * 
+     * @throws Exception ako se operacija ne izvrsi uspesno
+     */
     @Override
     protected void operacija() throws Exception {
         Connection connection = Konekcija.getInstance().getConnection();
@@ -48,7 +68,7 @@ public class SOKreirajGosta extends OpstaSistemskaOperacija{
             System.out.println("ID="+id);
             gost.setGostID(id);
         } // else { kljuc nije generisan  }
-        connection.commit(); // TODO: commit uraditi u servis metodi
+        connection.commit(); 
         preparedStatement.close();
         
     }

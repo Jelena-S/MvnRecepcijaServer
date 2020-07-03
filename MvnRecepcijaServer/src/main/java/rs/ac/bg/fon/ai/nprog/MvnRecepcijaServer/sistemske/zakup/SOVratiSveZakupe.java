@@ -16,19 +16,32 @@ import rs.ac.bg.fon.ai.nprog.MvnRecepcijaServer.sistemske.OpstaSistemskaOperacij
  * @author Win10
  */
 public class SOVratiSveZakupe extends OpstaSistemskaOperacija{
+	
+	/**
+	 * Lista zakupa 
+	 */
     List<ZakupSobe> zakupi = new ArrayList<>();
 
+    /**
+     * Parametrizovani konstruktor. Inicijalizuje sistemsku operaciju
+     */
     public SOVratiSveZakupe() {
     }
 
-    
-    
+    /**
+     * Metoda vraca listu zakupa
+     * 
+     * @return zakupi kao List<ZakupSobe>
+     */    
     public List<ZakupSobe> getZakupi() {
         return zakupi;
     }
     
-    
-
+    /**
+     * Metoda izvrsava sistemsku operaciju pregleda zakupa. Pristupa bazi i nalazi podatke o zakupima
+     * 
+     * @throws Exception ako se operacija ne izvrsi uspesno
+     */
     @Override
     protected void operacija() throws Exception {
         List<OpstiDomenskiObjekat> list = Konekcija.getInstance().getSveOpsteDomenskeObjekte(new ZakupSobe());

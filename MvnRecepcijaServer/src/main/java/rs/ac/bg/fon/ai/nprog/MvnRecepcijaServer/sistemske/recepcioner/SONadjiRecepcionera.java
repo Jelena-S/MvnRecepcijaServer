@@ -12,23 +12,39 @@ import java.util.List;
 import rs.ac.bg.fon.ai.nprog.MvnRecepcijaServer.sistemske.OpstaSistemskaOperacija;
 
 /**
+ * Klasa koja predstavlja sistemsku operaciju za pretrazivanje recepcionera. Nasledjuje apstraktnu klasu OpstaSistemskaOperacija
  *
- * @author Win10
+ * @author Jelena Sreckovic
  */
 public class SONadjiRecepcionera extends OpstaSistemskaOperacija{
-
+	/**
+	 * Podaci o recepcioneru koji treba biti pronadjen
+	 */
     Recepcioner recepcioner;
 
+    /**
+     * Parametrizovani konstruktor. Inicijalizuje sistemsku operaciju i postavlja recepcionera
+     * 
+     * @param recepcioner kog je potrebno naci u bazi
+     */
     public SONadjiRecepcionera(Recepcioner recepcioner) {
         this.recepcioner = recepcioner;
     }
 
+    /**
+     * Metoda vraca recepcionera
+     * 
+     * @return recepcioner kao Recepcioner
+     */
     public Recepcioner getRecepcioner() {
         return recepcioner;
     }
     
-    
-    
+    /**
+     * Metoda izvrsava sistemsku operaciju pretrazivanja recepcioenra. Pristupa bazi i nalazi podatke o recepcioneru na osnovu prosledjenog kriterijuma - korisnickog imena i lozinke
+     * 
+     * @throws Exception ako se operacija ne izvrsi uspesno
+     */    
     @Override
     protected void operacija() throws Exception {
         List<String> columns = new ArrayList<>();

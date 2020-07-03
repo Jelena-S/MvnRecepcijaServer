@@ -10,10 +10,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Predstavlja apstraktnu klasu koju nasledjuju sve sistemske operacije.
  *
- * @author Win10
+ * @author Jelena Sreckovic
  */
 public abstract class OpstaSistemskaOperacija {
+	
+	/**
+	 * Metoda koja poziva izvrsenje sistemske operacije. Uzima konekciju, izvrsava operaciju i ako je operacija uspesno izvrsena, cuva promene u bazi. U suprotnom, odbacuje promene. 
+	 * 
+	 * @throws Exception ako se operacija ne izvrsi uspesno
+	 */
     public final void izvrsenje() throws Exception{
         try {
             Konekcija.getInstance().getConnection();
@@ -26,5 +33,10 @@ public abstract class OpstaSistemskaOperacija {
         }
     }
     
+    /**
+     * Metoda izvrsava sistemsku operaciju
+     * 
+     * @throws Exception ako se operacija ne izvrsi uspesno
+     */
     protected abstract void operacija() throws Exception;
 }

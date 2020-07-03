@@ -15,7 +15,7 @@ import rs.ac.bg.fon.ai.nprog.MvnRecepcijaServer.kontroler.Kontroler;
 
 /**
  *
- * @author Win10
+ * @author Jelena Sreckovic
  */
 public class PokretanjeServera extends Thread{
     ServerSocket ss;

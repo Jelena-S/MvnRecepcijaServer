@@ -180,11 +180,11 @@ public class Konekcija {
         return list.get(0);
     }
     
-    public  OpstiDomenskiObjekat getOpstiDomenskiObjekatPoSlozenomPrimarnomKljucu(OpstiDomenskiObjekat o, Long id) throws SQLException {
+    public  OpstiDomenskiObjekat getOpstiDomenskiObjekatPoSlozenomPrimarnomKljucu(OpstiDomenskiObjekat o, Long id1, Long id2) throws SQLException {
         String query;
         String[] ids = o.getImenaParametara().split(",");
         
-            query = "SELECT * FROM " + o.getImeTabele()+ " WHERE " + ids[0] + "=" +id +" AND " + ids[1]+"="+id;
+            query = "SELECT * FROM " + o.getImeTabele()+ " WHERE " + ids[0] + "=" +id1 +" AND " + ids[1]+"="+id2;
         
         System.out.println("by primarykey: "+query);
         Statement s = (Statement) konekcija.createStatement();

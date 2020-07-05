@@ -38,7 +38,6 @@ public class SOGostTest {
 		Konekcija.getInstance().setUrl(Konfiguracija.getInstance().getDbUrl());
 		System.out.println("Vratio na pravu bazu: " + Konfiguracija.getInstance().getDbUrl());
 		connection.close();
-		// configuration.getinstance.geturl//////////////////////
 	}
 
 	@Before
@@ -56,11 +55,11 @@ public class SOGostTest {
 		Statement statement = connection.createStatement();
 		String upit = "INSERT INTO recepcioner VALUES(11, 'Jelena', 'Sreckovic', 'admin', 'admin')";
 		statement.executeUpdate(upit);
-		upit = "INSERT INTO gost VALUES(100, 'Pera', 'Peric', '78678', '6876','email',11)";
+		upit = "INSERT INTO gost VALUES(100, 'Pera', 'Peric', '6876', '78678','email',11)";
 		statement.executeUpdate(upit);
-		upit = "INSERT INTO gost VALUES(101, 'Zika', 'Zikic', '4444444', '55555555','emailpera',11)";
+		upit = "INSERT INTO gost VALUES(101, 'Zika', 'Zikic', '55555555', '4444444','emailpera',11)";
 		statement.executeUpdate(upit);
-		upit = "INSERT INTO gost VALUES(102, 'Pera', 'Peric', '888888', '999999','emailperic',11)";
+		upit = "INSERT INTO gost VALUES(102, 'Pera', 'Peric', '999999', '888888','emailperic',11)";
 		statement.executeUpdate(upit);
 
 		g1 = new Gost();
@@ -156,7 +155,7 @@ public class SOGostTest {
 
 		Gost nadjeni = (Gost) guests.get(3);
 
-		assertEquals(g.getImeGosta(), nadjeni.getImeGosta());
+		assertEquals(g, nadjeni);
 	}
 
 	@Test
@@ -198,8 +197,7 @@ public class SOGostTest {
 
 		Gost nadjeni = (Gost) guests.get(0);
 
-		assertEquals(g.getGostID(), nadjeni.getGostID());
-		assertEquals(g.getImeGosta(), nadjeni.getImeGosta());
+		assertEquals(g, nadjeni);
 	}
 
 	////////////////////////////// Obrisi gosta //////////////////////////////
@@ -269,8 +267,7 @@ public class SOGostTest {
 		}
 
 		assertEquals(guests.size(), gosti.size());
-		assertEquals(guests.get(0).getGostID(), gosti.get(0).getGostID());
-		assertEquals(guests.get(0).getImeGosta(), gosti.get(0).getImeGosta());
+		assertEquals(guests.get(0), gosti.get(0));
 	}
 
 	/////////////////////////////// PRETRAZI GOSTE //////////////////////////
@@ -307,7 +304,7 @@ public class SOGostTest {
 		}
 
 		assertEquals(2, guests.size());
-		assertEquals(gostiPera.get(0).getGostID(), guests.get(0).getGostID());
+		assertEquals(gostiPera.get(0), guests.get(0));
 	}
 	
 	@Test
@@ -346,7 +343,7 @@ public class SOGostTest {
 		}
 
 		assertEquals(2, guests.size());
-		assertEquals(gostiPera.get(0).getGostID(), guests.get(0).getGostID());
+		assertEquals(gostiPera.get(0), guests.get(0));
 	}
 	
 	//po sva tri

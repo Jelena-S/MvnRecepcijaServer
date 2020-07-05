@@ -140,7 +140,7 @@ public class SOSobaTest {
 		}
 
 		assertEquals(rooms.size(), sobe.size());
-		assertEquals(rooms.get(0).getSobaID(), sobe.get(0).getSobaID());
+		assertEquals(rooms.get(0), sobe.get(0));
 
 		// contains
 	}
@@ -176,7 +176,7 @@ public class SOSobaTest {
 		}
 
 		assertEquals(1, rooms.size());
-		assertEquals(soba1.getSobaID(), rooms.get(0).getSobaID());
+		assertEquals(soba1, rooms.get(0));
 		
 	}
 	//po vrsti
@@ -210,8 +210,8 @@ public class SOSobaTest {
 		}
 
 		assertEquals(sobe111.size(), rooms.size());
-		assertEquals(sobe111.get(0).getSobaID(), rooms.get(0).getSobaID());
-		assertEquals(sobe111.get(1).getSobaID(), rooms.get(1).getSobaID());
+		assertEquals(sobe111.get(0), rooms.get(0));
+		assertEquals(sobe111.get(1), rooms.get(1));
 		
 	}
 	
@@ -248,7 +248,7 @@ public class SOSobaTest {
 		}
 
 		assertEquals(1, rooms.size());
-		assertEquals(soba1.getSobaID(), rooms.get(0).getSobaID());
+		assertEquals(soba1, rooms.get(0));
 		
 	}
 	

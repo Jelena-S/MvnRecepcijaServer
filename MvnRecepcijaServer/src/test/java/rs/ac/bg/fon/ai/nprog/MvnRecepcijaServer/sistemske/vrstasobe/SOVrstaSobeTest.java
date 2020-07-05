@@ -106,8 +106,7 @@ public class SOVrstaSobeTest {
         }
 		
 		assertEquals(rents.size(), vrste.size());
-		assertEquals(rents.get(0).getVrstaSobeID(), vrste.get(0).getVrstaSobeID());
-		assertEquals(rents.get(0).getNazivVrsteSobe(), vrste.get(0).getNazivVrsteSobe());
+		assertEquals(rents.get(0), vrste.get(0));
 		//contains
 	}
 

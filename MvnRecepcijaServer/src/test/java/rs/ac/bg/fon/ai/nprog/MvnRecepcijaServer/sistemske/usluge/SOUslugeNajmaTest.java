@@ -189,7 +189,7 @@ public class SOUslugeNajmaTest {
 		
 		assertEquals(2, lista.size());
 		assertEquals(usluge6.size(), lista.size());
-		assertEquals(un1.getUslugaNajmaID(), lista.get(0).getUslugaNajmaID());
+		assertEquals(un1, lista.get(0));
 	}
 
 }

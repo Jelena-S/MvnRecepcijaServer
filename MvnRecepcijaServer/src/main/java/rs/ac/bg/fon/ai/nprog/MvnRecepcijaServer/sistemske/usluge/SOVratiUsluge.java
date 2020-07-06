@@ -64,7 +64,6 @@ public class SOVratiUsluge extends OpstaSistemskaOperacija{
         
         for (OpstiDomenskiObjekat opstiDomenskiObjekat : odo) {
             UslugaNajma un = (UslugaNajma) opstiDomenskiObjekat;
-            //informacija o katalogID????
             StavkaKataloga sk = (StavkaKataloga) Konekcija.getInstance().getOpstiDomenskiObjekatPoSlozenomPrimarnomKljucu(new StavkaKataloga(),un.getStavkaKataloga().getKatalog().getKatalogID(), un.getStavkaKataloga().getStavkaKatalogaID());
             un.setStavkaKataloga(sk);
             usluge.add(un);

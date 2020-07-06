@@ -52,7 +52,7 @@ public class Kontroler {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Greska prilikom zatvaranja soketa");
         }
-        System.out.println("Remove " + client.getOnlineReceptionist().getKorisnickoIme());
+        //System.out.println("Remove " + client.getOnlineReceptionist().getKorisnickoIme());
         klijenti.remove(client);
         
         System.out.println("Ostali su: ");

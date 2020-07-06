@@ -41,15 +41,12 @@ public class PokretanjeServera extends Thread{
                 
             }
             
-            //stopServerThread();
         } catch (IOException ex) {
-            //Logger.getLogger(PokretanjeServera.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Greskaaaa " + ex.getMessage());
             System.out.println("OVO JE ZAPRAVO UGASEN SERVER");
             
         }
         
-        //stopAllThreads();
         System.out.println("Zaustavljen");
     }
     

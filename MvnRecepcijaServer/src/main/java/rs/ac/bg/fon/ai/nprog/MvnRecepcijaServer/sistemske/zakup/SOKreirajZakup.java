@@ -62,7 +62,7 @@ public class SOKreirajZakup extends OpstaSistemskaOperacija{
         preparedStatement.setLong(7, zakup.getRecepcioner().getRecepcionerID());
         preparedStatement.setBoolean(8, zakup.isStatus());
         preparedStatement.executeUpdate();
-         // else { kljuc nije generisan  }
+         // else 
         //connection.commit(); 
         preparedStatement.close();
     }

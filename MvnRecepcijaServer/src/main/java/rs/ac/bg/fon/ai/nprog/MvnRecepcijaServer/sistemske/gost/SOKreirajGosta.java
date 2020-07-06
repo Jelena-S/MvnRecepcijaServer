@@ -67,7 +67,7 @@ public class SOKreirajGosta extends OpstaSistemskaOperacija{
             Long id = rs.getLong(1);
             System.out.println("ID="+id);
             gost.setGostID(id);
-        } // else { kljuc nije generisan  }
+        } // else 
         connection.commit(); 
         preparedStatement.close();
         

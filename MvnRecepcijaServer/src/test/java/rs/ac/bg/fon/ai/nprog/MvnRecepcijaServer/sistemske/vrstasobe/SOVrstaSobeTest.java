@@ -36,7 +36,6 @@ public class SOVrstaSobeTest {
 		Konekcija.getInstance().setUrl(Konfiguracija.getInstance().getDbUrl());
 		System.out.println("Vratio na pravu bazu: " + Konfiguracija.getInstance().getDbUrl());
 		connection.close();
-		// configuration.getinstance.geturl//////////////////////
 	}
 
 	@Before
@@ -71,12 +70,13 @@ public class SOVrstaSobeTest {
 		vrstaSobe=null;
 		vrstaSobe1=null;
 		vrste=null;
-		Statement statement = connection.createStatement();// proveri da li moze sa istim statementom
+		Statement statement = connection.createStatement();
 		String upit = "DELETE FROM vrstasobe";
 		statement.executeUpdate(upit);
 		connection.commit();
 	}
 
+	//SIstemska operacija vrati sve vrste soba
 	@Test
 	public void testOperacija() throws Exception {
 		SOVratiSveVrsteSoba so = new SOVratiSveVrsteSoba();

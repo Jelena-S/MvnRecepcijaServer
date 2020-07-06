@@ -35,7 +35,6 @@ public class SORecepcionerTest {
 		Konekcija.getInstance().setUrl(Konfiguracija.getInstance().getDbUrl());
 		System.out.println("Vratio na pravu bazu: " + Konfiguracija.getInstance().getDbUrl());
 		connection.close();
-		// configuration.getinstance.geturl//////////////////////
 	}
 
 	@Before
@@ -85,6 +84,7 @@ public class SORecepcionerTest {
 		connection.commit();
 	}
 
+	//Sistemska operacija nadji recepcionera
 	@Test
 	public void testOperacija() throws Exception {
 		SONadjiRecepcionera so = new SONadjiRecepcionera(recepcioner);

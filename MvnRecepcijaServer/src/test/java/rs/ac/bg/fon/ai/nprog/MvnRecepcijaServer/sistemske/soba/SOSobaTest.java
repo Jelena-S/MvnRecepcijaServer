@@ -25,8 +25,8 @@ public class SOSobaTest {
 	Soba soba1, soba2, soba3;
 	VrstaSobe vrstaSobe, vrstaSobe2;
 	List<Soba> sobe,sobe111;
-	static Connection connection;
 	List<String> columns, values;
+	static Connection connection;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -39,7 +39,6 @@ public class SOSobaTest {
 		Konekcija.getInstance().setUrl(Konfiguracija.getInstance().getDbUrl());
 		System.out.println("Vratio na pravu bazu: " + Konfiguracija.getInstance().getDbUrl());
 		connection.close();
-		// configuration.getinstance.geturl//////////////////////
 	}
 
 	@Before
@@ -113,6 +112,7 @@ public class SOSobaTest {
 		connection.commit();
 	}
 
+	//Sistemska operacija vrati sve sobe
 	@Test
 	public void testOperacija() throws Exception {
 		SOVratiSveSobe so = new SOVratiSveSobe();
@@ -141,11 +141,9 @@ public class SOSobaTest {
 
 		assertEquals(rooms.size(), sobe.size());
 		assertEquals(rooms.get(0), sobe.get(0));
-
-		// contains
 	}
 
-	///// pretrazi
+	//Sistemska operacija vrati sobe po kriterijumu
 
 	@Test
 	public void testOperacijaVratiPoJednomKriterijumuBroj() throws Exception {
@@ -179,6 +177,7 @@ public class SOSobaTest {
 		assertEquals(soba1, rooms.get(0));
 		
 	}
+	
 	//po vrsti
 	
 	@Test

@@ -29,9 +29,9 @@ public class SOZakupSobeTest {
 	Soba s,s2,s3;
 	Recepcioner r;
 	VrstaSobe vs, vs2;
-	static Connection connection;
 	List<ZakupSobe> zakupi, zakupi1111;
 	List<String> columns, values;
+	static Connection connection;
 	
 
 	@BeforeClass
@@ -45,7 +45,6 @@ public class SOZakupSobeTest {
 		Konekcija.getInstance().setUrl(Konfiguracija.getInstance().getDbUrl());
 		System.out.println("Vratio na pravu bazu: " + Konfiguracija.getInstance().getDbUrl());
 		connection.close();
-		// configuration.getinstance.geturl//////////////////////
 	}
 
 	@Before
@@ -76,7 +75,7 @@ public class SOZakupSobeTest {
 		
 		zs4 = new ZakupSobe();
 		
-		g4=new Gost(Long.valueOf(4), "Jelena", "Sreckovic", "123456789", "123123", "jeca", r);
+		g4=new Gost(Long.valueOf(4), "Jelena", "Sreckovic", "123123123", "123123", "jeca", r);
 		
 		zs4.setZakupID(Long.valueOf(44444));
 		zs4.setGostZakupljuje(g4);
@@ -110,7 +109,6 @@ public class SOZakupSobeTest {
 		zs2.setDatumOd(datumOd);
 		zs2.setDatumDo(datumDo);
 		
-		//////////////////////////////////
 		zs3 = new ZakupSobe();
 		
 		g3=new Gost(Long.valueOf(3), "Zika", "Zikic", "111111", "11111", "emailzika", r);
@@ -173,7 +171,7 @@ public class SOZakupSobeTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Statement statement = connection.createStatement();// proveri da li moze sa istim statementom
+		Statement statement = connection.createStatement();
 		String upit = "DELETE FROM zakupsobe";
 		statement.executeUpdate(upit);
 		upit = "DELETE FROM soba";
@@ -191,6 +189,8 @@ public class SOZakupSobeTest {
 		zs = null;
 		vs = null;
 	}
+	
+	//Sistemska operacija kreiraj zakup sobe
 
 	@Test
 	public void testOperacijaKreiraj() throws Exception {
@@ -228,6 +228,7 @@ public class SOZakupSobeTest {
         assertEquals(zs.getGostZakupljuje().getGostID(), nadjeni.getGostZakupljuje().getGostID());
 	}
 	
+	//Sistemska operacija vrati sve zakupe sobe
 	@Test
 	public void testOperacijaVratiSve() throws Exception{
 		SOVratiSveZakupe so = new SOVratiSveZakupe();
@@ -261,8 +262,10 @@ public class SOZakupSobeTest {
 		assertEquals(rents.get(0), zakupi.get(0));
 	}
 	
+	//Sistemska operacija vrati zakupe soba po kriterijumu
+	
 	@Test
-	public void testOperacijaPretrazi() throws Exception{
+	public void testOperacijaPretraziPoVrsti() throws Exception{
 		columns.add("vrstaSobeID");
 		values.add("1111");
 		SOPretraziZakupe so = new SOPretraziZakupe(columns,values);
@@ -294,6 +297,114 @@ public class SOZakupSobeTest {
         
         assertEquals(rents.size(), zakupi1111.size());
 		assertEquals(rents.get(0), zakupi1111.get(0));
+	}
+	
+	@Test
+	public void testOperacijaPretraziPoBrojuLicneKarte() throws Exception{
+		columns.add("brojLicneKarte");
+		values.add("'123123123'");
+		SOPretraziZakupe so = new SOPretraziZakupe(columns,values);
+		so.izvrsenje();
+		
+		Statement statement = connection.createStatement();
+		String upit = "SELECT * FROM gost JOIN zakupsobe on gost.gostID=zakupsobe.gostZakupljujeID join soba on zakupsobe.zakupljenaSobaID=soba.sobaID WHERE brojLicneKarte='123123123'";
+		ResultSet rs = statement.executeQuery(upit);
+		
+		List<ZakupSobe> rents = new ArrayList<>();
+        try {
+            while (rs.next()) {                
+                Long gost = rs.getLong("gostZakupljujeID");
+                Long room = rs.getLong("zakupljenaSobaID");
+                Long rent = rs.getLong("zakupID");
+                Date dOD = rs.getDate("datumOd");
+                Date dDO = rs.getDate("datumDo");
+                Double price = rs.getDouble("cena");
+                Long recepcionistID = rs.getLong("recepcionerID");
+                boolean status = rs.getBoolean("status");
+                
+                ZakupSobe z = new ZakupSobe(new Gost(gost), new Soba(room), rent, dOD, dDO, price,status,new Recepcioner(recepcionistID));
+                rents.add(z);
+            }
+        } catch (Exception e) {
+            System.out.println("Greska u ZakupSObe.Class ResultSet"); 
+                 
+        }
+        
+        assertEquals(1, rents.size());
+		assertEquals(zs4, rents.get(0));
+	}
+	
+	@Test
+	public void testOperacijaPretraziPoDvaKriterijuma() throws Exception{
+		columns.add("brojLicneKarte");
+		values.add("'123123123'");
+		
+		columns.add("vrstaSobeID");
+		values.add("1111");
+		
+		SOPretraziZakupe so = new SOPretraziZakupe(columns,values);
+		so.izvrsenje();
+		
+		Statement statement = connection.createStatement();
+		String upit = "SELECT * FROM gost JOIN zakupsobe on gost.gostID=zakupsobe.gostZakupljujeID join soba on zakupsobe.zakupljenaSobaID=soba.sobaID WHERE brojLicneKarte='123123123' AND vrstaSobeID=1111";
+		ResultSet rs = statement.executeQuery(upit);
+		
+		List<ZakupSobe> rents = new ArrayList<>();
+        try {
+            while (rs.next()) {                
+                Long gost = rs.getLong("gostZakupljujeID");
+                Long room = rs.getLong("zakupljenaSobaID");
+                Long rent = rs.getLong("zakupID");
+                Date dOD = rs.getDate("datumOd");
+                Date dDO = rs.getDate("datumDo");
+                Double price = rs.getDouble("cena");
+                Long recepcionistID = rs.getLong("recepcionerID");
+                boolean status = rs.getBoolean("status");
+                
+                ZakupSobe z = new ZakupSobe(new Gost(gost), new Soba(room), rent, dOD, dDO, price,status,new Recepcioner(recepcionistID));
+                rents.add(z);
+            }
+        } catch (Exception e) {
+            System.out.println("Greska u ZakupSObe.Class ResultSet"); 
+                 
+        }
+        
+        assertEquals(1, rents.size());
+		assertEquals(zs4, rents.get(0));
+	}
+	
+	@Test
+	public void testOperacijaPretraziNemaTakvih() throws Exception{
+		columns.add("brojLicneKarte");
+		values.add("'987654321'");
+		SOPretraziZakupe so = new SOPretraziZakupe(columns,values);
+		so.izvrsenje();
+		
+		Statement statement = connection.createStatement();
+		String upit = "SELECT * FROM gost JOIN zakupsobe on gost.gostID=zakupsobe.gostZakupljujeID join soba on zakupsobe.zakupljenaSobaID=soba.sobaID WHERE brojLicneKarte='987654321'";
+		ResultSet rs = statement.executeQuery(upit);
+		
+		List<ZakupSobe> rents = new ArrayList<>();
+        try {
+            while (rs.next()) {                
+                Long gost = rs.getLong("gostZakupljujeID");
+                Long room = rs.getLong("zakupljenaSobaID");
+                Long rent = rs.getLong("zakupID");
+                Date dOD = rs.getDate("datumOd");
+                Date dDO = rs.getDate("datumDo");
+                Double price = rs.getDouble("cena");
+                Long recepcionistID = rs.getLong("recepcionerID");
+                boolean status = rs.getBoolean("status");
+                
+                ZakupSobe z = new ZakupSobe(new Gost(gost), new Soba(room), rent, dOD, dDO, price,status,new Recepcioner(recepcionistID));
+                rents.add(z);
+            }
+        } catch (Exception e) {
+            System.out.println("Greska u ZakupSObe.Class ResultSet"); 
+                 
+        }
+        
+        assertEquals(0, rents.size());
 	}
 
 }

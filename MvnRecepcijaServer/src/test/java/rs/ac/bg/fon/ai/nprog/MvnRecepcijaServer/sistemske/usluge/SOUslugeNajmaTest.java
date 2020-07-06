@@ -28,9 +28,9 @@ public class SOUslugeNajmaTest {
 	StavkaKataloga sk1, sk2, sk3;
 	Katalog k;
 	VrstaSobe vs1, vs2;
-	static Connection connection;
 	List<String> columns, values;
 	List<UslugaNajma> usluge, usluge6;
+	static Connection connection;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -43,7 +43,6 @@ public class SOUslugeNajmaTest {
 		Konekcija.getInstance().setUrl(Konfiguracija.getInstance().getDbUrl());
 		System.out.println("Vratio na pravu bazu: " + Konfiguracija.getInstance().getDbUrl());
 		connection.close();
-		// configuration.getinstance.geturl//////////////////////
 	}
 
 	@Before
@@ -158,6 +157,7 @@ public class SOUslugeNajmaTest {
 		connection.commit();
 	}
 
+	//Sistemska operacija vrati usluge najma
 	@Test
 	public void testOperacija() throws Exception {
 		columns.add("vrstaSobeID");
@@ -190,6 +190,38 @@ public class SOUslugeNajmaTest {
 		assertEquals(2, lista.size());
 		assertEquals(usluge6.size(), lista.size());
 		assertEquals(un1, lista.get(0));
+	}
+	
+	@Test
+	public void testOperacijaNemaTakvih() throws Exception {
+		columns.add("vrstaSobeID");
+		values.add("11111");
+		
+		SOVratiUsluge so = new SOVratiUsluge(columns, values);
+		so.izvrsenje();
+		
+		Statement statement = connection.createStatement();
+		String upit = "SELECT * FROM usluganajma WHERE vrstaSobeID=11111";
+		ResultSet rs = statement.executeQuery(upit);
+
+		List<UslugaNajma> lista = new ArrayList<>();
+		
+		try {
+            while (rs.next()) {     
+                Long stavkaID = rs.getLong("stavkaKatalogaID");
+                Long uslugaID = rs.getLong("uslugaNajmaID");
+                String name = rs.getString("nazivUslugeNajma");
+                Double price = rs.getDouble("cenaUsluge");
+                Long vrstaSobeID = rs.getLong("vrstaSobeID");
+                
+               UslugaNajma un = new UslugaNajma(new StavkaKataloga(stavkaID),uslugaID, name, price, new VrstaSobe(vrstaSobeID));
+               lista.add(un);
+            }
+        } catch (Exception e) {
+            System.out.println("Greska u UslugaNajma.Class ResultSet");      
+        }
+		
+		assertEquals(0, lista.size());
 	}
 
 }

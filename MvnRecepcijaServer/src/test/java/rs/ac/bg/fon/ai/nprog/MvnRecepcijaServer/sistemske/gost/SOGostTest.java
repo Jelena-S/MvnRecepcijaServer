@@ -23,9 +23,9 @@ public class SOGostTest {
 
 	Gost g, g1, g2, g3;
 	Recepcioner recepcioner;
-	static Connection connection;
 	List<Gost> gosti, gostiPera;
 	List<String> columns, values;
+	static Connection connection;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -65,7 +65,7 @@ public class SOGostTest {
 		g1 = new Gost();
 		g1.setImeGosta("Pera");
 		g1.setPrezimeGosta("Peric");
-		g1.setBrojTelefona("78678"); //VIDI REDOSLED PARAMETARA
+		g1.setBrojTelefona("78678"); 
 		g1.setBrojLicneKarte("6876");
 		g1.setEmail("email");
 		g1.setRecepcioner(recepcioner);
@@ -106,7 +106,7 @@ public class SOGostTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Statement statement = connection.createStatement();// proveri da li moze sa istim statementom
+		Statement statement = connection.createStatement();
 		String upit = "DELETE FROM gost";
 		statement.executeUpdate(upit);
 		upit = "DELETE FROM recepcioner";
@@ -123,6 +123,8 @@ public class SOGostTest {
 		values = null;
 	}
 
+	//Sistemska operaciaj kreiraj gosta
+	
 	@Test
 	public void testOperacijaKreiraj() throws Exception {
 		SOKreirajGosta so = new SOKreirajGosta(g);
@@ -158,13 +160,7 @@ public class SOGostTest {
 		assertEquals(g, nadjeni);
 	}
 
-	@Test
-	public void testSOKreirajGosta() {
-		// fail("Not yet implemented");
-	}
-
-	////////////////////////////// Izmeni gosta //////////////////////////////
-	////////////////////////////// //////////////////////////////////////////////////
+	//Sistemska operacija izmeni gosta
 
 	@Test
 	public void testOperacijaIzmeni() throws Exception {
@@ -200,8 +196,7 @@ public class SOGostTest {
 		assertEquals(g, nadjeni);
 	}
 
-	////////////////////////////// Obrisi gosta //////////////////////////////
-	////////////////////////////// //////////////////////////////////////////////////
+	//Sistemska operacija obrisi gosta
 
 	@Test
 	public void testOperacijaObrisi() throws Exception {
@@ -235,7 +230,7 @@ public class SOGostTest {
 		assertFalse(guests.contains(g));
 	}
 
-	/////////////////////////////// VRATI SVE GOSTE //////////////////////////
+	//Sistemska operacija vrati sve goste
 
 	@Test
 	public void testOperacijaVratiSve() throws Exception {
@@ -270,7 +265,7 @@ public class SOGostTest {
 		assertEquals(guests.get(0), gosti.get(0));
 	}
 
-	/////////////////////////////// PRETRAZI GOSTE //////////////////////////
+	//Sistemska operacija vrati goste po kriterijumu
 
 	@Test
 	public void testOperacijaVratiPoJednomKriterijumu() throws Exception {
@@ -305,6 +300,40 @@ public class SOGostTest {
 
 		assertEquals(2, guests.size());
 		assertEquals(gostiPera.get(0), guests.get(0));
+	}
+	
+	@Test
+	public void testOperacijaVratiPoJednomKriterijumuNemaTakvih() throws Exception {
+		columns.add("imeGosta");
+		values.add("'Jelena'");
+		SOPretraziGoste so = new SOPretraziGoste(columns, values);
+		so.izvrsenje();
+
+		Statement statement = connection.createStatement();
+		String upit = "SELECT * FROM gost WHERE imeGosta='Jelena'";
+		ResultSet rs = statement.executeQuery(upit);
+
+		List<Gost> guests = new ArrayList<>();
+		try {
+			while (rs.next()) {
+				Long guestID = rs.getLong("gostID");
+				String name = rs.getString("imeGosta");
+				String lastname = rs.getString("prezimeGosta");
+				String cardID = rs.getString("brojLicneKarte");
+				String phoneNumber = rs.getString("brojTelefona");
+				String mail = rs.getString("email");
+				Long recepcionistID = rs.getLong("recepcionerID");
+
+				Gost g = new Gost(guestID, name, lastname, cardID, phoneNumber, mail, new Recepcioner(recepcionistID));
+				guests.add(g);
+				System.out.println(g);
+			}
+		} catch (Exception e) {
+			System.out.println("Greska u Gost.Class ResultSet");
+
+		}
+
+		assertEquals(0, guests.size());
 	}
 	
 	@Test
@@ -346,8 +375,46 @@ public class SOGostTest {
 		assertEquals(gostiPera.get(0), guests.get(0));
 	}
 	
-	//po sva tri
-	
-	//neuspeno brisanje constraint
+	@Test
+	public void testOperacijaVratiPoTriKriterijuma() throws Exception {
+		columns.add("imeGosta");
+		values.add("'Pera'");
+		
+		columns.add("prezimeGosta");
+		values.add("'Peric'");
+		
+		columns.add("brojLicneKarte");
+		values.add("'6876'");
+		
+		SOPretraziGoste so = new SOPretraziGoste(columns, values);
+		so.izvrsenje();
+
+		Statement statement = connection.createStatement();
+		String upit = "SELECT * FROM gost WHERE imeGosta='Pera' AND prezimeGosta='Peric' AND brojLicneKarte='6876'";
+		ResultSet rs = statement.executeQuery(upit);
+
+		List<Gost> guests = new ArrayList<>();
+		try {
+			while (rs.next()) {
+				Long guestID = rs.getLong("gostID");
+				String name = rs.getString("imeGosta");
+				String lastname = rs.getString("prezimeGosta");
+				String cardID = rs.getString("brojLicneKarte");
+				String phoneNumber = rs.getString("brojTelefona");
+				String mail = rs.getString("email");
+				Long recepcionistID = rs.getLong("recepcionerID");
+
+				Gost g = new Gost(guestID, name, lastname, cardID, phoneNumber, mail, new Recepcioner(recepcionistID));
+				guests.add(g);
+				System.out.println(g);
+			}
+		} catch (Exception e) {
+			System.out.println("Greska u Gost.Class ResultSet");
+
+		}
+
+		assertEquals(1, guests.size());
+		assertEquals(gostiPera.get(0), guests.get(0));
+	}
 
 }

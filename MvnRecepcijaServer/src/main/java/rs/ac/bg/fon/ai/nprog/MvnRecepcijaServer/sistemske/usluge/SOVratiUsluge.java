@@ -59,12 +59,13 @@ public class SOVratiUsluge extends OpstaSistemskaOperacija{
      */
     @Override
     protected void operacija() throws Exception {
-        List<OpstiDomenskiObjekat> odo = Konekcija.getInstance().getSveOpsteDomenskeObjekteSaWhere(new UslugaNajma(), columns, values);
+    	String join = "usluganajma JOIN stavkakataloga on usluganajma.stavkaKatalogaID=stavkakataloga.stavkaKatalogaID";
+        List<OpstiDomenskiObjekat> odo = Konekcija.getInstance().getSveOpsteDomenskeObjekteJOIN(new UslugaNajma(), columns, values, join);
         
         for (OpstiDomenskiObjekat opstiDomenskiObjekat : odo) {
             UslugaNajma un = (UslugaNajma) opstiDomenskiObjekat;
             //informacija o katalogID????
-            StavkaKataloga sk = (StavkaKataloga) Konekcija.getInstance().getOpstiDomenskiObjekatPoSlozenomPrimarnomKljucu(new StavkaKataloga(),Long.valueOf(1111), un.getStavkaKataloga().getStavkaKatalogaID());
+            StavkaKataloga sk = (StavkaKataloga) Konekcija.getInstance().getOpstiDomenskiObjekatPoSlozenomPrimarnomKljucu(new StavkaKataloga(),un.getStavkaKataloga().getKatalog().getKatalogID(), un.getStavkaKataloga().getStavkaKatalogaID());
             un.setStavkaKataloga(sk);
             usluge.add(un);
             //vrsta sobe

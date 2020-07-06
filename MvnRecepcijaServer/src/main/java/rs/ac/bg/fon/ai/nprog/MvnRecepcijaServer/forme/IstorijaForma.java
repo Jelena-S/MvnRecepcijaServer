@@ -7,8 +7,11 @@ package rs.ac.bg.fon.ai.nprog.MvnRecepcijaServer.forme;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -27,6 +30,7 @@ public class IstorijaForma extends javax.swing.JDialog {
     public IstorijaForma(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        prepareForm();
     }
 
     /**
@@ -105,14 +109,28 @@ public class IstorijaForma extends javax.swing.JDialog {
 			
 			lista = gsonIn.fromJson(in, type);
 			
+			StringBuilder sb = new StringBuilder();
+			sb.append("");
+			
 			for (Istorija istorija : lista) {
 				System.out.println(istorija);
-			
+				sb.append("Operacija: ");
+				sb.append(istorija.getOperacija());
+				sb.append("; Datum: ");
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy. HH:ss:mm");
+				String datum = sdf.format(istorija.getDatum());
+				sb.append(datum);
+				
+				sb.append("\n");
 			}
-			
+			String istorija = sb.toString();
+			jTextArea1.setText(istorija);
 			
 		} catch(IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			JOptionPane.showMessageDialog(this, "ne postoji takvo korisnicko ime");
+			return;
 		}
     }//GEN-LAST:event_jBtnPretraziActionPerformed
 
@@ -165,4 +183,8 @@ public class IstorijaForma extends javax.swing.JDialog {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTxtRecepcioner;
     // End of variables declaration//GEN-END:variables
+    
+    private void prepareForm() {
+        setLocationRelativeTo(null);
+    }
 }

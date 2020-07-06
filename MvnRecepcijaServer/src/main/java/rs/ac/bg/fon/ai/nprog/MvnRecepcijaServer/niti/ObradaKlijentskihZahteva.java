@@ -238,26 +238,18 @@ public class ObradaKlijentskihZahteva extends Thread{
             System.out.println("OPERACIJA JE: "+req.getOperacija());
             posaljiOdgovor(res);
             
-    /////////11.5
-            //JsonArray jsonArray = new JsonArray();
+    
+            
             List<Istorija> lista = new ArrayList<>();
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             try {
-    			//JsonParser jsonParser = new JsonParser();
-    			//Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    			//JsonArray jsonArray = new JsonArray();
-            	
     			StringBuilder putanja = new StringBuilder();
     			putanja.append(onlineRecepcioner.getKorisnickoIme()).append(".json");
     			String path = putanja.toString();
     			System.out.println(path);
     			
-    			//BufferedReader br = new BufferedReader(new FileReader(path));
-    			
-    			//Object obj = jsonParser.parse(new FileReader(onlineReceptionist.getKorisnickoIme()+".json"));
     			FileReader in = new FileReader(onlineRecepcioner.getKorisnickoIme()+".json");
-    			
-    			
+    			   			
     			Gson gsonIn = new Gson();
     			Type type = new TypeToken<ArrayList<Istorija>>(){}.getType();
     			
@@ -265,22 +257,10 @@ public class ObradaKlijentskihZahteva extends Thread{
     			
     			lista = gsonIn.fromJson(in, type);
     			
-    			//if(obj.equals(null)) {
-    				//System.out.println("PRAZAN JEE");
-    			//} else {
-    				//Object obj = jsonParser.parse(new FileReader(onlineReceptionist+".json"));
-        			//jsonArray  = (JsonArray) obj;
-    			//}
     			FileWriter out = new FileWriter(onlineRecepcioner.getKorisnickoIme()+".json");
-    			//JsonObject istorija = new JsonObject();
-    			//SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy. HH:mm:ss");
     			Istorija istorija = new Istorija(res.getOperacija(),new Date(),res.getPoruka(),true);
     			
-    			
     			lista.add(istorija);
-    			
-    			
-    			//jsonArray.add(istorija);
     			
     			gson.toJson(lista, out);
     			System.out.println("Upisao u json");
@@ -288,13 +268,9 @@ public class ObradaKlijentskihZahteva extends Thread{
     			out.close();
     		} catch(FileNotFoundException fnf) {
     			FileWriter out = new FileWriter(onlineRecepcioner.getKorisnickoIme()+".json");
-    			/*JsonObject istorija = new JsonObject();
-    			istorija.addProperty("operacija", res.getOperacija());
-    			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy. HH:mm:ss");
-    			istorija.addProperty("datum", sdf.format(new Date().getTime()));*/
+    			
     			Istorija istorija = new Istorija(res.getOperacija(),new Date(),res.getPoruka(),true);
     			
-    			//jsonArray.add(istorija);
     			lista.add(istorija);
     			
     			gson.toJson(lista, out);

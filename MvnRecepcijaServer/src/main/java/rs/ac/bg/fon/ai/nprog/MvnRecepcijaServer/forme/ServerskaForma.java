@@ -37,6 +37,7 @@ public class ServerskaForma extends javax.swing.JFrame {
 
     public ServerskaForma() {
         initComponents();
+        prepareForm();
         ps = new PokretanjeServera();
         ps.start();
         popuniTabelu();
@@ -242,5 +243,9 @@ public class ServerskaForma extends javax.swing.JFrame {
 
     public void obrisi(Recepcioner onlineReceptionist) {
         ortm.obrisi(onlineReceptionist);
+    }
+    
+    private void prepareForm() {
+        setLocationRelativeTo(null);
     }
 }
